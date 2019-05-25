@@ -1,13 +1,15 @@
 package tools.number.classes;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.axis2.databinding.types.UnsignedLong;
 
 public class API {
 	
 	public enum Language {
-		ROMAN, GERMAN, ENGLISH, JAPANESE, ESPERANTO, VAMPIRSCHWESTERN;
+		ROMAN, GERMAN, ENGLISH, JAPANESE, ESPERANTO, VAMPIRSCHWESTERN, BINARY;
 	}
 	
 	public static UnsignedLong parseUnsignedLong(String unsignedLong) {
@@ -28,6 +30,8 @@ public class API {
 				return getEsperantoNumber(number);
 			case VAMPIRSCHWESTERN:
 				return getVampirschwesternNumber(number);
+			case BINARY:
+				return getBinaryNumber(number);
 			default:
 				return null;
 		}
@@ -731,6 +735,18 @@ public class API {
 		}
 	}
 	
+	public static String getBinaryNumber(UnsignedLong number) {
+		String x = "";
+		if (number.equals(new UnsignedLong(0)))
+			return "0";
+		while (number.compareTo(new UnsignedLong(0)) > 0) { // number > 0
+			UnsignedLong a = mod(number, new UnsignedLong("2"));
+			x = a.toString() + x;
+			number = floorDiv(number, new UnsignedLong("2"));
+		}
+		return x;
+	}
+	
 	private static UnsignedLong increase(UnsignedLong number) {
 		return add(number, new UnsignedLong("1"));
 	}
@@ -749,6 +765,10 @@ public class API {
 	
 	private static UnsignedLong floorDiv(UnsignedLong number, UnsignedLong divider) {
 		return new UnsignedLong(new BigInteger(number.toString()).divide(new BigInteger(divider.toString())).toString());
+	}
+	
+	private static UnsignedLong mod(UnsignedLong number, UnsignedLong divider) {
+		return new UnsignedLong(new BigInteger(number.toString()).mod(new BigInteger(divider.toString())));
 	}
 	
 	private static boolean dividable(UnsignedLong number, UnsignedLong divider) {

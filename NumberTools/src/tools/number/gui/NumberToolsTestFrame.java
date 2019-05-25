@@ -34,7 +34,7 @@ public class NumberToolsTestFrame {
 				btn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						lbl.setText(API.getNumber(Language.VAMPIRSCHWESTERN, new UnsignedLong((Integer) js.getValue())));
+						lbl.setText(API.getNumber(Language.BINARY, new UnsignedLong((Integer) js.getValue())));
 					}
 				});
 				frame.add(btn, BorderLayout.EAST);
